@@ -1,6 +1,6 @@
 <template>
     <div class="cc-icon" :style="{borderWidth: props.border == undefined ? '0px' : props.border+'px', backgroundColor:props.color, fontSize:props.iconSize+'px'}">
-        <img :src="`../../src/assets/icon/${props.icon}.svg`" :style="{width:props.iconSize+'px',display:'block'}">
+        <img :src="`/icons/${props.icon}.svg`" :style="{width:props.iconSize+'px',display:'block'}">
     </div>
 </template>
 <script setup>

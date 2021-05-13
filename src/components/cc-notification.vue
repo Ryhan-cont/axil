@@ -1,7 +1,7 @@
 <template>
     <div class="cc-notification-container">
         <div class="cc-notification-icon">
-            <img :src="`../../src/assets/icon/notification.svg`" :style="{width:props.iconWIdth+'px'}" />
+            <img :src="`/icons/notification.svg`" :style="{width:props.iconWIdth+'px'}" />
         </div>
         <div class="cc-notification-number" :style="{width:iconNumberWIdth+'px', height:iconNumberWIdth+'px'}">{{props.totalNotification}}</div>
     </div>

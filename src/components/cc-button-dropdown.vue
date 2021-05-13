@@ -1,7 +1,7 @@
 <template>
     <div class="cc-button-dropdown-container">
         <div class="cc-button-dropdown-btn" @click="toggleBtn = !toggleBtn">
-            <img :src="`../../src/assets/icon/ellipsis.svg`" :style="{width:'20px'}">
+            <img :src="`/icons/ellipsis.svg`" :style="{width:'20px'}">
         </div>
         <div v-if="toggleBtn" class="cc-button-dropdown-options-container">
             <div class="cc-button-dropdown-options">

@@ -1,7 +1,7 @@
 <template>
     <div class="cc-button" :style="{borderWidth: props.border == undefined ? '0px' : props.border+'px', backgroundColor:props.color, fontSize:props.textSize+'px', padding:padding}">
         <div style="display:flex">
-            <div v-if="props.icon != undefined" class="cc-button-icon-container"><img :src="`../../src/assets/icon/${props.icon}.svg`" :style="{width:props.textSize+'px'}"></div>
+            <div v-if="props.icon != undefined" class="cc-button-icon-container"><img :src="`/icons/${props.icon}.svg`" :style="{width:props.textSize+'px'}"></div>
             <div :style="{color:textColor}">{{props.label}}</div>
         </div>
     </div>
