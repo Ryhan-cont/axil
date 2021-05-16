@@ -3,6 +3,7 @@
 
 .layout--main{
     min-height: 100vh;
+    min-width: 370px;
 }
 .layout--main-body{
     flex: auto;
@@ -21,7 +22,7 @@
     left: 0rem;
     position: fixed;
     display: flex;
-    z-index: 1;
+    z-index: 2;
     height: 100vh;
     background-color: $fullscreenShadow;
 }
@@ -49,10 +50,20 @@
     transition: all .1s linear;
     padding: 15px 50px;
     z-index: 1;
+    min-width: 380px;
 }
 
 // Layout Footer
 .layout--main-footer{
     height: 40px;
     background-color: rgba(224, 224, 224, 0.8)
+}
+
+@media (max-width:500px) {
+    .layout--main-body{
+        padding: 0px 20px;
+    }
+    .layout--main-header{
+        padding: 15px 20px;
+    }
 }

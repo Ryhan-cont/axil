@@ -156,6 +156,15 @@
 </script>
 
 <style lang="scss">
+    .cc-button-dropdown-item{
+        padding: 10px;
+        border-radius: 10px;
+        color: #808191;
+        cursor: pointer;
+    }
+    .cc-button-dropdown-item:hover{
+        background-color:#F9FAFC;
+    }
     .cc-task {
         padding: 20px;
         background-color: #FFFFFF;

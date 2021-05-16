@@ -1,18 +1,23 @@
 <template>
     <div>
         <div class="body-header">
-            <div><CcPropicList :height="40" :list="userList" listTarget="avatar_url" /></div>
-            <div class="body-header-invite"><CcButton label="Invite People" :border="2" :textSize="16" icon="add-user" :padding=".8" /></div>
-            <div style="flex:1"></div>
-            <div class="body-header-status"><CcTitle :fontSize="14" status="Importent" title="Importent" /></div>
-            <div class="body-header-status"><CcTitle :fontSize="14" status="Irrelevant" title="Irrelevant" /></div>
-            <div class="body-header-status"><CcTitle :fontSize="14" status="Default" title="Default" /></div>
+            <div class="flx">
+                <div><CcPropicList :height="40" :list="userList" listTarget="avatar_url" /></div>
+                <div class="body-header-invite"><CcButton label="Invite People" :border="2" :textSize="16" icon="add-user" :padding=".8" /></div>
+            </div>
+            <div class="body-header-status-container">
+                <div class="body-header-status"><CcTitle :fontSize="14" status="Importent" title="Importent" /></div>
+                <div class="body-header-status"><CcTitle :fontSize="14" status="Irrelevant" title="Irrelevant" /></div>
+                <div class="body-header-status"><CcTitle :fontSize="14" status="Default" title="Default" /></div>
+            </div>
         </div>
+
         <div style="height:30px"></div>
-        <div class="todo-items">
-            <div class="todo-items-container">
+        <div class="todo-items flx block-lg w100-lg">
+            <!-- Item Container -->
+            <div class="w30 w100-lg">
                 <div class="todo-items-header">
-                    <div class="todo-items-title">
+                    <div class="f-16 f-bold flx-auto h-center">
                         To Do <span class="todo-items-title-count">({{toDoCount}})</span>
                     </div>
                     <div><CcButton label="New Task" color="#E0E2E8" :textSize="12" icon="plus" @click="newTaskEvent('todo')" :padding="1.2" /></div>
@@ -27,9 +32,10 @@
                     </draggable>
                 </div>
             </div>
-            <div class="todo-items-container">
+            <!-- Item Container -->
+            <div class="w30 w100-lg">
                 <div class="todo-items-header">
-                    <div class="todo-items-title">
+                    <div class="f-16 f-bold flx-auto h-center">
                         In progress <span class="todo-items-title-count">({{inPogressCount}})</span>
                     </div>
                     <div><CcButton label="New Task" color="#E0E2E8" :textSize="12" icon="plus" @click="newTaskEvent('prog')" :padding="1.2" /></div>
@@ -44,9 +50,10 @@
                     </draggable>
                 </div>
             </div>
-            <div class="todo-items-container">
+            <!-- Item Container -->
+            <div class="w30 w100-lg">
                 <div class="todo-items-header">
-                    <div class="todo-items-title">
+                    <div class="f-16 f-bold flx-auto h-center">
                         Done <span class="todo-items-title-count">({{doneTaskCount}})</span>
                     </div>
                     <div></div>
@@ -110,7 +117,7 @@
                   </div>
                 </div>
                 <div class="tsm-save-button">
-                    <CcButton label="Save" @click="savetaskItem()" color="#0049C6" :textSize="14" textColor="#FFFFFF" :padding="1.5" />
+                    <CcButton :label="newTaskPage == 'gen' ? 'Next' : 'save'" @click="savetaskItem()" color="#0049C6" :textSize="14" textColor="#FFFFFF" :padding="1.5" />
                 </div> 
             </div>
         </CcModal>
@@ -182,17 +189,22 @@
         taskItem.assignedUser.push(e)
     }
     const savetaskItem = () => {
-        if(taskItem.source == 'todo'){
-            var newToDO = toDo.value;
-            newToDO.push(lodash.cloneDeep(taskItem));
-            store.commit('toDoUpdate', newToDO)
+        if(newTaskPage.value == 'gen'){
+            newTaskPage.value = 'assign';
+        }else{
+            if(taskItem.source == 'todo'){
+                var newToDO = toDo.value;
+                newToDO.push(lodash.cloneDeep(taskItem));
+                store.commit('toDoUpdate', newToDO)
+            }
+            if(taskItem.source == 'prog'){
+                var newInPogress = inPogress.value;
+                newInPogress.push(lodash.cloneDeep(taskItem));
+                store.commit('inPogressUpdate', newInPogress)
+            }
+            modal.value = false;            
         }
-        if(taskItem.source == 'prog'){
-            var newInPogress = inPogress.value;
-            newInPogress.push(lodash.cloneDeep(taskItem));
-            store.commit('inPogressUpdate', newInPogress)
-        }
-        modal.value = false;
+
     }
     watch([store.state.toDo, store.state.inPogress, store.state.doneTask], () => {
         store.commit('callSave')
@@ -212,16 +224,6 @@
 </script>
 
 <style lang="scss">
-    .cc-button-dropdown-item{
-        padding: 10px;
-        border-radius: 10px;
-        color: #808191;
-        cursor: pointer;
-    }
-    .cc-button-dropdown-item:hover{
-        background-color:#F9FAFC;
-    }
-
     .body-header{
         display: flex;
         padding: 30px 0px;
@@ -233,39 +235,49 @@
         &-invite{
             padding: 0px 20px;
         }
+        &-status-container{
+            padding-top: 0px;
+            display: flex;
+            justify-content: flex-end;
+            flex:auto;
+        }
+    }
+    @media (max-width:850px) {
+        .body-header{
+            display: block;
+            &-status-container{
+                padding-top: 30px;
+                justify-content: flex-start;
+            }
+        }
     }
     .todo-items{
-        display: flex;
         justify-content: space-between;
-        &-container{
-            width:30%;
-        }
         &-header{
             display: flex;
             height: 35px;
-        }
-        &-title{
-            font-size: 16px;
-            font-weight: bold;
-            flex:auto;
-            display: flex;
-            align-items: center;
         }
         &-title-count{
             font-size:18px;
             color:#8F909F;
             padding-left:10px ;
         }
-
     }
     .dragable-box{
         padding-top: 25px;
+        padding-bottom: 25px;
     }
     .list-group{
-        min-height: 300px;
+        min-height: 250px;
     }
     .list-group-item{
         padding: 10px 0px;
+    }
+    @media (max-width:1000px) {
+        .dragable-box{
+            padding-top: 5px;
+            padding-bottom: 35px;
+        }
     }
 
 

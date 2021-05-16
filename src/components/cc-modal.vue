@@ -55,6 +55,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 10px;
+        min-width: 380px;
     }
     .cc-modal-container{
         background-color: #ffffff;

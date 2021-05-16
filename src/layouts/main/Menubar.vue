@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <div class="layout--main-detail-container" v-if="menu.menuDetail || menu.windowWidth < menu.mobileBreakPoint" :style="{width:menu.menuWidth+'px'}">
+        <div class="layout--main-detail-container" v-if="menu.menuDetail" :style="{width:menu.menuWidth+'px'}">
             <div class="menu-detail-header">
                 <div class="menu-detail-header-title">Project</div>
                 <div class="menu-detail-header-icon"><CcIcon color="#0049C6" :iconSize="14" icon="plus-black" /></div>
@@ -49,7 +49,8 @@
     const menuSelected = (item,index) => {
         selectedMenu.value = item
         menuItem.length = 0;
-        menuItem.push(...menuData[index].items)
+        menuItem.push(...menuData[index].items);
+        menu.menuDetail = true;
         console.log(menuItem);
     }
     onMounted(()=>{
